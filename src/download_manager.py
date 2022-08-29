@@ -50,14 +50,14 @@ class DownloadManager:
         self.Mb_size = round((stream.filesize/1024)/1024,1)
         load_bar.Mb_size = self.Mb_size
         load_bar.update(self.Mb_size)
-        stream.download()
+        stream.download(output_path = self.file_path)
    
     def donwload_audio(self) -> None:
         stream =  self.video_info.streams.filter(only_audio=True).first()
         self.Mb_size = round((stream.filesize/1024)/1024,1)
         load_bar.Mb_size = self.Mb_size
         load_bar.update(self.Mb_size)
-        file = stream.download()
+        file = stream.download(output_path = self.file_path)
         path = pathlib.Path(file)
         path.rename(path.with_suffix('.mp3'))
         
