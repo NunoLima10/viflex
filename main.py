@@ -1,7 +1,4 @@
-
-from time import sleep
-from download_manager import DownloadManager
-from pytube import YouTube
+from src.download_manager import DownloadManager
 import argparse
 
 def arg_parser() -> argparse.Namespace:

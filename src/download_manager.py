@@ -1,6 +1,6 @@
-from color_printer import ColorPrinter
-from load_bar import LoadBar
-from  pytube import YouTube,exceptions
+from src.color_printer import ColorPrinter
+from src.load_bar import LoadBar
+from pytube import YouTube,exceptions
 
 import pathlib
 import argparse
@@ -8,6 +8,8 @@ import datetime
 
 load_bar = LoadBar()
 printer =  ColorPrinter()
+
+
 class DownloadManager:
     def __init__(self, args: argparse.Namespace) -> None:
         self.video = args.v
