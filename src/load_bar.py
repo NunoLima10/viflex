@@ -25,7 +25,7 @@ class LoadBar:
         filled_bar = colorama.Fore.GREEN +  self.fill * filledLength + colorama.Fore.RESET 
         not_filled_bar = self.no_fill * (self.length - filledLength) 
 
-        print(f'\r{Mb_donwloaded}Mb / {self.Mb_size} Mb |{ filled_bar + not_filled_bar}| {percent}%', end = "\r")
+        print(f'\r{Mb_donwloaded} Mb / {self.Mb_size} Mb |{ filled_bar + not_filled_bar}| {percent}%', end = "\r")
         
     
     def finish(self) -> None:
