@@ -11,10 +11,11 @@ class ColorPrinter:
             "error":colorama.Fore.RED + colorama.Style.BRIGHT
         }
 
-    def show(self, text: str, type: str = "success") -> None:
+    def show(self, text: str, type: str = "success", print_end: str = "\n") -> None:
         message = text
         if type in self.styles:
             message = f'{self.styles[type]}{text}'
-        print(message)
+        print(message,end=print_end)
 
     
+
