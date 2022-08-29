@@ -1,6 +1,13 @@
 from src.download_manager import DownloadManager
 import argparse
 
+__author__ = "Nuno Lima"
+__copyright__ = "Copyright 2022 Nuno Lima"
+__version__ = "0.1.0"
+__maintainer__ = "Nuno Lima"
+__email__ = "contato.playcraft@gmail.com"
+__status__ = "Production"
+
 def arg_parser() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("-v","-video",help="Download format",action="store_true")
