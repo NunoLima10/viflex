@@ -12,7 +12,7 @@ def arg_parser() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("-v","-video",help="download only the video",action="store_true")
     parser.add_argument("-a","-audio",help="download only the audio",action="store_true")
-    parser.add_argument("url",help="video url - must be in quotes",type=str)
+    parser.add_argument("url",help="video url must be in quotes",type=str)
     
     return parser.parse_args()
 
