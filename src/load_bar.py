@@ -1,12 +1,13 @@
 
+from hurry.filesize import alternative
+from hurry.filesize import size
 import colorama
 
-
 class LoadBar:
-    def __init__(self, Mb_size: float = 100 , length: int = 50, decimals: float = 1, 
+    def __init__(self, total_size: float = 100 , length: int = 50, decimals: float = 1, 
                 fill: str = '█', no_fill:str = "-") -> None:
 
-       self.Mb_size =  Mb_size
+       self.total_size =  total_size
        self.length = length
        self.decimals = decimals
        self.fill = fill
@@ -14,17 +15,23 @@ class LoadBar:
 
        colorama.init(autoreset=True)
 
-    def update(self, Mb_remaining: float) -> None:
+    def clear_line(self) -> None:
+        print(" " * 100,end="\r")
+
+    def update(self, remaining: int) -> None:
         
-        Mb_donwloaded = round(self.Mb_size - Mb_remaining, 1)
+        finished = self.total_size - remaining
        
-        percent = ("{0:." + str(self.decimals) + "f}").format(100 * (Mb_donwloaded / self.Mb_size))
-        filledLength = int(self.length * Mb_donwloaded // self.Mb_size)
+        percent = round(100 * finished / self.total_size, self.decimals)
+        filledLength = int(self.length * finished // self.total_size)
 
         filled_bar = colorama.Fore.GREEN +  self.fill * filledLength + colorama.Fore.RESET 
         not_filled_bar = self.no_fill * (self.length - filledLength) 
 
-        print(f'\r{Mb_donwloaded} Mb / {self.Mb_size} Mb |{ filled_bar + not_filled_bar}| {percent}%', end = "\r")
+        finished_label =  size(finished,system=alternative)
+        total_size_label =  size(self.total_size,system=alternative)
+        self.clear_line()
+        print(f'\r{finished_label} / {total_size_label} |{ filled_bar + not_filled_bar}| {percent} %', end = "\r")
         
     def finish(self) -> None:
         print("")
