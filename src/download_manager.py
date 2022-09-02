@@ -9,9 +9,6 @@ import datetime
 load_bar = LoadBar()
 printer =  ColorPrinter()
 
-def bytes_to_Mb(bytes_size: int) -> float:
-    return round((bytes_size/1024)/1024,1)
-
 class DownloadManager:
     def __init__(self, args: argparse.Namespace) -> None:
         self.video = args.v
@@ -47,22 +44,20 @@ class DownloadManager:
 
     def donwload_video(self) -> None: 
         stream = self.video_info.streams.get_highest_resolution()
-        self.Mb_size = round((stream.filesize/1024) / 1024, 1)
-        load_bar.Mb_size = self.Mb_size
-        load_bar.update(self.Mb_size)
+        load_bar.total_size = stream.filesize
+        load_bar.update(stream.filesize)
         stream.download(output_path=self.file_path)
    
     def donwload_audio(self) -> None:
         stream =  self.video_info.streams.filter(only_audio=True).first()
-        self.Mb_size = bytes_to_Mb(stream.filesize)
-        load_bar.update(self.Mb_size)
+        load_bar.total_size = stream.filesize
+        load_bar.update(stream.filesize)
         file = stream.download(output_path=self.file_path)
         path = pathlib.Path(file)
         path.rename(path.with_suffix('.mp3'))
         
     def on_progress(stream, chunk, file_handle, bytes_remaining):
-        Mb_remaining =  bytes_to_Mb(bytes_remaining)
-        load_bar.update(Mb_remaining)
+        load_bar.update(bytes_remaining)
         
     def on_complete(chunk, file_handle, bytes_remaining):
         load_bar.finish() 
