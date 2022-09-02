@@ -1,6 +1,7 @@
 from src.color_printer import ColorPrinter
 from src.load_bar import LoadBar
 from pytube import YouTube,exceptions
+from urllib.error import URLError
 
 import pathlib
 import argparse
@@ -16,10 +17,16 @@ class DownloadManager:
         self.video_info = None
         try:
             self.video_info = YouTube(args.url)
+            self.show_video_info()
         except exceptions.RegexMatchError:
             printer.show(f'Provided an invalid url {args.url}',"error")
+            exit()
         except exceptions.VideoUnavailable:
             printer.show("Private videos cannot be downloaded","warning")
+            exit()
+        except URLError:
+            printer.show(f'Device is not connected to the internet',"error")
+            exit()
 
         self.file_path = pathlib.Path.cwd()
        
@@ -31,7 +38,7 @@ class DownloadManager:
         self.video_info.register_on_progress_callback(self.on_progress)
         self.video_info.register_on_complete_callback(self.on_complete)
         
-        self.show_video_info()
+        
 
         if self.video:
             self.donwload_video()
