@@ -53,13 +53,13 @@ class DownloadManager:
         stream = self.video_info.streams.get_highest_resolution()
         load_bar.total_size = stream.filesize
         load_bar.update(stream.filesize)
-        stream.download(output_path=self.file_path)
+        stream.download(output_path=self.file_path,filename_prefix="Viflex-v-")
    
     def donwload_audio(self) -> None:
         stream =  self.video_info.streams.filter(only_audio=True).first()
         load_bar.total_size = stream.filesize
         load_bar.update(stream.filesize)
-        file = stream.download(output_path=self.file_path)
+        file = stream.download(output_path=self.file_path,filename_prefix="Viflex-a-")
         path = pathlib.Path(file)
         path.rename(path.with_suffix('.mp3'))
         
