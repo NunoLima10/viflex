@@ -12,6 +12,9 @@
  
  ### How to use
  > - Open the terminal in the directory where you want to save the file
+ > <img src="images/image.png">
+ >
+ >
  > - Follow the following structure to download only the video
  >```
  >viflex -v "video link in quotes"
