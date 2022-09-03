@@ -1,32 +1,31 @@
 <img src="images/banner.jpg">
 
-## Baixe vídeos e musicas do You Tube pelo seu terminal
+## Download videos and music from You Tube through your terminal
 
-### Instalação 
+### Installation
 
-> - Baixe o executável  
-> - Descomprimir o arquivo 
-> - Coloque o endereço da pasta na [variável de ambiente](https://knowledge.autodesk.com/pt-br/support/navisworks-products/troubleshooting/caas/sfdcarticles/sfdcarticles/PTB/Adding-folder-path-to-Windows-PATH-environment-variable.html) ``PATH`` (opcional)
+> - Download the executable
+> - Decompress the file
+> - Put the folder address in [environment variable](https://knowledge.autodesk.com/pt-br/support/navisworks-products/troubleshooting/caas/sfdcarticles/sfdcarticles/PTB/Adding-folder-path-to-Windows-PATH-environment-variable.html) ``PATH`` (optional)
  
- --- 
+ ---
  
- ### Como usar
- > - Abra o terminal no diretório onde deseja guardar o arquivo 
- > - Siga a seguinte estrutura para baixar apenas o video 
+ ### How to use
+ > - Open the terminal in the directory where you want to save the file
+ > - Follow the following structure to download only the video
  >```
- >viflex -v "link do vídeo entre aspas"
+ >viflex -v "video link in quotes"
 > ```
 >
-> - Siga a seguinte estrutura para baixar apenas o áudio 
+> - Follow the following structure to download only the audio
 >```
->viflex -a "link do vídeo entre aspas"
+>viflex -a "video link in quotes"
 > ```
---- 
-### Observações 
-> - Video será baixado automaticamente com melhor qualidade disponível 
-> - Caso não tenha colocado o endereço da pasta na variável de ambiente você apenas pode executar os comandos no mesmo diretório  do executável 
-> - Se omitir os parâmetros -v e -a  automaticamente será baixado apenas o video  
+---
+### Comments
+> - Video will be automatically downloaded with best available quality
+> - If you haven't put the folder address in the environment variable you can just run the commands in the same directory as the executable
+> - If you omit the -v and -a parameters automatically, only the video will be downloaded
 >```
->viflex "link do vídeo entre aspas"
+>viflex "video link in quotes"
 >```
- 
