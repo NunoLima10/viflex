@@ -10,7 +10,7 @@
  
  ---
  
- ### How to use
+ ### How to use on Windows
  > - Open the terminal in the directory where you want to save the file
  > <img src="images/image.png">
  >
@@ -23,6 +23,11 @@
 > - Follow the following structure to download only the audio
 >```
 >viflex -a "video link in quotes"
+> ```
+ ### How to use on Ubuntu
+ > - Similar to windows the only difference is that it must start with `./`
+ >```
+>./viflex -a "video link in quotes"
 > ```
 ---
 ### Comments
