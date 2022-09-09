@@ -9,14 +9,22 @@ import datetime
 
 load_bar = LoadBar()
 printer =  ColorPrinter()
-
+class NotYoutubeLink(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
 class DownloadManager:
     def __init__(self, args: argparse.Namespace) -> None:
         self.video = args.v
         self.audio = args.a
+        self.url = args.url
         self.video_info = None
+        self.valid_urls = ["www.youtube.com/shorts", "www.youtube.com/watch?v"]
         try:
-            self.video_info = YouTube(args.url)
+            valid = [True for url in self.valid_urls if  url in self.url]
+            
+            if not valid:
+                raise NotYoutubeLink
+            self.video_info = YouTube(self.url)
             self.show_video_info()
         except exceptions.RegexMatchError:
             printer.show(f'Provided an invalid url {args.url}',"error")
@@ -27,25 +35,22 @@ class DownloadManager:
         except URLError:
             printer.show(f'Device is not connected to the internet',"error")
             exit()
+        except NotYoutubeLink:
+            printer.show(f'Provided an invalid url {args.url}',"error")
+            exit()
 
         self.file_path = pathlib.Path.cwd()
-       
             
     def start(self) -> None:
         if not self.video_info:
             return
-
         self.video_info.register_on_progress_callback(self.on_progress)
         self.video_info.register_on_complete_callback(self.on_complete)
         
-        
-
         if self.video:
             self.donwload_video()
-           
         if self.audio:
             self.donwload_audio()
-           
         if not self.video and not self.audio:
             self.donwload_video()
 
@@ -53,8 +58,8 @@ class DownloadManager:
         stream = self.video_info.streams.get_highest_resolution()
         load_bar.total_size = stream.filesize
         load_bar.update(stream.filesize)
-        stream.download(output_path=self.file_path,filename_prefix="Viflex-v-")
-   
+        stream.download(output_path=self.file_path,filename_prefix="Viflex-v-")  
+
     def donwload_audio(self) -> None:
         stream =  self.video_info.streams.filter(only_audio=True).first()
         load_bar.total_size = stream.filesize
@@ -85,8 +90,3 @@ class DownloadManager:
         print(f'{duration} mim')
 
         printer.show("==================","warning")
-
-
-      
-
-        

@@ -17,5 +17,4 @@ class ColorPrinter:
             message = f'{self.styles[type]}{text}'
         print(message,end=print_end)
 
-    
 
