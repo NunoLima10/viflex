@@ -90,3 +90,4 @@ class DownloadManager:
         print(f'{duration} mim')
 
         printer.show("==================","warning")
+        printer.show("(CRTL + C) To cancel","warning")
