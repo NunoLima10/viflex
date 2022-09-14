@@ -39,8 +39,8 @@ class DownloadManager:
             printer.show(f'Provided an invalid url {args.url}',"error")
             exit()
 
-        self.file_path = pathlib.Path.cwd()
-            
+        self.file_path = pathlib.Path.cwd()  
+
     def start(self) -> None:
         if not self.video_info:
             return
@@ -48,19 +48,19 @@ class DownloadManager:
         self.video_info.register_on_complete_callback(self.on_complete)
         
         if self.video:
-            self.donwload_video()
+            self.download_video()
         if self.audio:
-            self.donwload_audio()
+            self.download_audio()
         if not self.video and not self.audio:
-            self.donwload_video()
+            self.download_video()
 
-    def donwload_video(self) -> None: 
+    def download_video(self) -> None: 
         stream = self.video_info.streams.get_highest_resolution()
         load_bar.total_size = stream.filesize
         load_bar.update(stream.filesize)
         stream.download(output_path=self.file_path,filename_prefix="Viflex-v-")  
 
-    def donwload_audio(self) -> None:
+    def download_audio(self) -> None:
         stream =  self.video_info.streams.filter(only_audio=True).first()
         load_bar.total_size = stream.filesize
         load_bar.update(stream.filesize)

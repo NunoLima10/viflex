@@ -6,14 +6,13 @@ import colorama
 class LoadBar:
     def __init__(self, total_size: float = 100 , length: int = 50, decimals: float = 1, 
                 fill: str = '█', no_fill:str = "-") -> None:
+        self.total_size =  total_size
+        self.length = length
+        self.decimals = decimals
+        self.fill = fill
+        self.no_fill = no_fill
 
-       self.total_size =  total_size
-       self.length = length
-       self.decimals = decimals
-       self.fill = fill
-       self.no_fill = no_fill
-
-       colorama.init(autoreset=True)
+        colorama.init(autoreset=True)
 
     def clear_line(self) -> None:
         print(" " * 100,end="\r")
@@ -21,7 +20,6 @@ class LoadBar:
     def update(self, remaining: int) -> None:
         
         finished = self.total_size - remaining
-       
         percent = round(100 * finished / self.total_size, self.decimals)
         filledLength = int(self.length * finished // self.total_size)
 
