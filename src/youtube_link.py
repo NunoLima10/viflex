@@ -1,11 +1,6 @@
 from exceptions import InvalidURL,VideoUnavailable
 from pytube import extract,request
-import re
-
-def regex_search(pattern: str, string: str) -> bool:
-    regex = re.compile(pattern)
-    results = regex.search(string)
-    return results is not None
+from util import regex_search
 
 class YouTubeLink:
     def __init__(self, url: str) -> None:

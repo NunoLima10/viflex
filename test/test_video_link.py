@@ -1,10 +1,9 @@
-
 import unittest
 
 class TestVideoLink(unittest.TestCase):
-    pass
-
-
+    
+    def test_invalid_url(self):
+        print("test")
 
 
 if __name__== "__main__":
