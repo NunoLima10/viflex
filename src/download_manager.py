@@ -4,40 +4,15 @@ from pytube import YouTube,exceptions
 from urllib.error import URLError
 
 import pathlib
-import argparse
 import datetime
 
 load_bar = LoadBar()
 printer =  ColorPrinter()
-class NotYoutubeLink(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
+
 class DownloadManager:
-    def __init__(self, args: argparse.Namespace) -> None:
-        self.video = args.v
-        self.audio = args.a
-        self.url = args.url
-        self.video_info = None
-        self.valid_urls = ["www.youtube.com/shorts", "www.youtube.com/watch?v"]
-        try:
-            valid = [True for url in self.valid_urls if  url in self.url]
-            
-            if not valid:
-                raise NotYoutubeLink
-            self.video_info = YouTube(self.url)
-            self.show_video_info()
-        except exceptions.RegexMatchError:
-            printer.show(f'Provided an invalid url {args.url}',"error")
-            exit()
-        except exceptions.VideoUnavailable:
-            printer.show("Private videos cannot be downloaded","warning")
-            exit()
-        except URLError:
-            printer.show(f'Device is not connected to the internet',"error")
-            exit()
-        except NotYoutubeLink:
-            printer.show(f'Provided an invalid url {args.url}',"error")
-            exit()
+    def __init__(self, args: dict) -> None:
+        self.flags = args
+        
 
         self.file_path = pathlib.Path.cwd()  
 

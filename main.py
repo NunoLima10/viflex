@@ -10,7 +10,8 @@ __status__ = "Production"
 
 def main() -> None:
     arg_parser = ArgParser()
-    arg_parser.parse()
+    args = arg_parser.parse()
+    download_manager = DownloadManager(args)
 
 
 if __name__=="__main__":
