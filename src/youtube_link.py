@@ -1,6 +1,13 @@
-from exceptions import InvalidURL,VideoUnavailable
 from pytube import extract,request
 from util import regex_search
+
+class InvalidURL(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
+
+class VideoUnavailable(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
 
 class YouTubeLink:
     def __init__(self, url: str) -> None:
