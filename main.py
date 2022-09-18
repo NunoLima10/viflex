@@ -12,6 +12,7 @@ def main() -> None:
     arg_parser = ArgParser()
     args = arg_parser.parse()
     download_manager = DownloadManager(args)
+    download_manager.start()
 
 
 if __name__=="__main__":
