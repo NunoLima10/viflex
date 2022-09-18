@@ -2,6 +2,8 @@ import requests
 from urllib.request import urlopen
 from urllib.error import URLError
 import re
+import pathlib
+from pytube import YouTube
 
 def regex_search(pattern: str, string: str) -> bool:
     regex = re.compile(pattern)
@@ -16,8 +18,8 @@ def is_internet() -> bool:
     except URLError:
         return False
 
-def download_image(url: str, name:str,output_folder: str) -> None:
+def download_image(url: str, name: str, output_folder: str) -> None:
     img_data = requests.get(url).content
-    file_name = f"{name}.jpg"
-    with open(file_name, 'wb') as handler:
+    file = f"{output_folder}/{name}.jpg"
+    with open(file, 'wb') as handler:
         handler.write(img_data)
