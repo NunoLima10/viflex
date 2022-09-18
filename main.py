@@ -1,5 +1,5 @@
-from src.download_manager import DownloadManager
 from src.argparser import ArgParser
+from src.download_manager import DownloadManager
 
 __author__ = "Nuno Lima"
 __copyright__ = "Copyright 2022 Nuno Lima"

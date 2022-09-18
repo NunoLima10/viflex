@@ -1,4 +1,4 @@
-from src.youtube_link import YouTubeLink
+from src import youtube_link
 import unittest
 
 

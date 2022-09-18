@@ -1,5 +1,5 @@
 from pytube import extract,request
-from util import regex_search
+from src.util import regex_search
 
 class InvalidURL(Exception):
     def __init__(self, *args: object) -> None:
@@ -8,6 +8,7 @@ class InvalidURL(Exception):
 class VideoUnavailable(Exception):
     def __init__(self, *args: object) -> None:
         super().__init__(*args)
+
 
 class YouTubeLink:
     def __init__(self, url: str) -> None:
@@ -70,19 +71,19 @@ class YouTubeLink:
         
         return {"available": available_flag,"error_message": error_message}
 
-urls = {
-    "private_video":"https://www.youtube.com/watch?v=Ki_Szad3hNE", 
-    "private_playlist":"https://www.youtube.com/playlist?list=PLLcS6ldQh_lwGNK3Nx-aDikadwYLLyFM9",
-    "invalid_url":"link", 
-    "playlist_url":"https://www.youtube.com/playlist?list=PLLcS6ldQh_lwxzNRjsAgwjVg_CcOJsxFd",
-    "short":"https://www.youtube.com/shorts/89pR3PQsxpg",
-    "video_on_playlist":"https://www.youtube.com/watch?v=BiQIc7fG9pA&list=RDGMEM6ijAnFTG9nX1G-kbWBUCJAVMJnzVOgNR_rE&index=27"
-}
+# urls = {
+#     "private_video":"https://www.youtube.com/watch?v=Ki_Szad3hNE", 
+#     "private_playlist":"https://www.youtube.com/playlist?list=PLLcS6ldQh_lwGNK3Nx-aDikadwYLLyFM9",
+#     "invalid_url":"link", 
+#     "playlist_url":"https://www.youtube.com/playlist?list=PLLcS6ldQh_lwxzNRjsAgwjVg_CcOJsxFd",
+#     "short":"https://www.youtube.com/shorts/89pR3PQsxpg",
+#     "video_on_playlist":"https://www.youtube.com/watch?v=BiQIc7fG9pA&list=RDGMEM6ijAnFTG9nX1G-kbWBUCJAVMJnzVOgNR_rE&index=27"
+# }
 
-for name,url in urls.items():
-    print("\n\n")
-    link = YouTubeLink(url)
-    label = f"{name} {link.available_for_download()} \nis video {link.is_video} is playlist {link.is_playlist} "
-    print(label)
+# for name,url in urls.items():
+#     print("\n\n")
+#     link = YouTubeLink(url)
+#     label = f"{name} {link.available_for_download()} \nis video {link.is_video} is playlist {link.is_playlist} "
+#     print(label)
 
 
