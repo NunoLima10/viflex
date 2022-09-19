@@ -1,3 +1,4 @@
+from crypt import methods
 from src.youtube_link import YouTubeLink
 from src.color_printer import ColorPrinter
 from src.load_bar import LoadBar
@@ -8,7 +9,7 @@ import pathlib
 import datetime
 
 load_bar = LoadBar()
-printer =  ColorPrinter()
+
 
 class DownloadManager:
     def __init__(self, args: dict) -> None:
@@ -16,7 +17,7 @@ class DownloadManager:
         self.file_path = pathlib.Path.cwd()
         self.video_prefix = "Viflex-v-"
         self.audio_prefix = "Viflex-a-"
-        printer.show("Working on it...","warning",print_end="\r")
+        ColorPrinter.show("Working on it...","warning",print_end="\r")
         
     
     def validate_args(self) -> YouTubeLink:
@@ -24,12 +25,10 @@ class DownloadManager:
         status = youtube_link.available_for_download()
 
         if not status["available"]:
-            printer.show(status["error_message"],"error")
-            exit()
+            ColorPrinter.show(status["error_message"],"error",on_error_exit=True)
         
         if self.args["playlist"] and not youtube_link.is_playlist:
-            printer.show("Provided playlist flag but is a video url","error")
-            exit()
+            ColorPrinter.show("Provided playlist flag but is a video url","error",on_error_exit=True)
         
         self.validate_quality(self.args["quality"])
         self.validate_path(self.args["path"])
@@ -39,16 +38,14 @@ class DownloadManager:
         if path is not None:
             valid_path = pathlib.Path.exists(path)
             if not valid_path:
-                printer.show(f"Provided invalid path {path}","error")
-                exit()
+                ColorPrinter.show(f"Provided invalid path {path}","error",on_error_exit=True)
         self.file_path = path
 
     def validate_quality(self, quality: str) -> None:
         if quality is not None:
             valid_quality = regex_search(r"^[\d]{3,4}[p]$", quality)
             if not valid_quality:
-                printer.show(f"Provided invalid quality {quality}","error")
-                exit()
+                ColorPrinter.show(f"Provided invalid quality {quality}","error",on_error_exit=True)
 
     def start(self) -> None:
         if self.args["info"]:
@@ -89,9 +86,9 @@ class DownloadManager:
 
         info = f"Title: {video.title}\nChannel: {video.author}\nViews: {video.views}\nDuration: {duration} mim"
         
-        printer.show("Video info".center(20,"="),"warning")
+        ColorPrinter.show("Video info".center(20,"="),"warning")
         print(info)
-        printer.show("="*30,"warning")
+        ColorPrinter.show("="*30,"warning")
 
 
     def show_playlist_info(self, url: str) -> None:
@@ -101,9 +98,9 @@ class DownloadManager:
         except KeyError:
             info = "Playlist have no info"
 
-        printer.show("Playlist info".center(20,"="),"warning")
+        ColorPrinter.show("Playlist info".center(20,"="),"warning")
         print(info)
-        printer.show("="*30,"warning")
+        ColorPrinter.show("="*30,"warning")
 
         # def download_video(self) -> None: 
     #     video = YouTube(self.args["url"])
