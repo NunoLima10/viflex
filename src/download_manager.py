@@ -1,7 +1,8 @@
+from select import select
 from src.youtube_link import YouTubeLink
 from src.color_printer import ColorPrinter
 from src.load_bar import LoadBar
-from src.util import regex_search
+from src.util import regex_search,with_internet,download_image
 from pytube import YouTube,Playlist
 
 import pathlib
@@ -13,7 +14,7 @@ load_bar = LoadBar()
 class DownloadManager:
     def __init__(self, args: dict) -> None:
         self.args = args
-        self.file_path = pathlib.Path.cwd()
+        self.output_folder = pathlib.Path.cwd()
         self.video_prefix = "Viflex-v-"
         self.audio_prefix = "Viflex-a-"
         ColorPrinter.show("Working on it...","warning",print_end="\r")
@@ -38,7 +39,7 @@ class DownloadManager:
             valid_path = pathlib.Path.exists(path)
             if not valid_path:
                 ColorPrinter.show(f"Provided invalid path {path}","error",on_error_exit=True)
-        self.file_path = path
+            self.output_folder = path
 
     def validate_quality(self, quality: str) -> None:
         if quality is not None:
@@ -47,13 +48,18 @@ class DownloadManager:
                 ColorPrinter.show(f"Provided invalid quality {quality}","error",on_error_exit=True)
 
     def start(self) -> None:
+
         self.validate_args()
+
         if self.args["info"]:
             self.complete_info(self.args["url"])
             exit()
         
-        # if self.args["thumbnail"]:
-        #     self.download_thumbnail()
+        if self.args["thumbnail"]:
+            self.download_thumbnail(
+                url=self.args["url"],
+                output_folder=self.output_folder
+            )
         
         # if self.args["playlist"]:
         #     self.download_playlist()
@@ -90,7 +96,6 @@ class DownloadManager:
         print(info)
         ColorPrinter.show("="*30,"warning")
 
-
     def show_playlist_info(self, url: str) -> None:
         playlist = Playlist(url)
         try:
@@ -101,6 +106,34 @@ class DownloadManager:
         ColorPrinter.show("Playlist info".center(20,"="),"warning")
         print(info)
         ColorPrinter.show("="*30,"warning")
+
+    @with_internet
+    def download_thumbnail(*arg, **kwargs) -> bool:
+        if kwargs["url"] is None or kwargs["output_folder"] is None:
+            return False
+        
+        youtube_link = YouTubeLink(kwargs["url"])
+        status = youtube_link.available_for_download()
+
+        if not status["available"]:
+            return False
+        
+        if youtube_link.is_playlist and not youtube_link.is_video:
+            return False
+        
+        ColorPrinter.show(text="Downloading thumbnail")
+        video = YouTube(kwargs["url"])
+        thumbnail_url = video.thumbnail_url
+        download_image(
+            url = thumbnail_url,
+            name=video.title,
+            output_folder=kwargs["output_folder"],
+        )
+
+        
+
+
+
 
         # def download_video(self) -> None: 
     #     video = YouTube(self.args["url"])
@@ -142,9 +175,6 @@ class DownloadManager:
     #     path = pathlib.Path(file)
     #     path.rename(path.with_suffix('.mp3'))
         
-    # def download_thumbnail(self) -> None:
-    #     pass
-
     # def show_video_info(self) -> None:
     #     duration = str(datetime.timedelta(seconds=self.video_info.length))
 
