@@ -17,7 +17,6 @@ class YouTubeLink:
         self.playlist_url_pattern = r"(?:list=)([0-9A-Za-z_-]{11}).*"
 
     def check_video_availability(self):
-
         video_id = extract.video_id(self.url)
         watch_url = f"https://youtube.com/watch?v={video_id}"
         watch_html = request.get(url=watch_url)

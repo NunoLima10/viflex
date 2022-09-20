@@ -22,9 +22,7 @@ class ColorPrinter:
         if type in ColorPrinter.styles:
             message = f'{ColorPrinter.styles[type]}{text}'
         return message
-# usage
-my_colored_text = ColorPrinter.colored(text="Success") 
-ColorPrinter.show(text="Fatal error",type="error",on_error_exit=True)
+
 
 
 
