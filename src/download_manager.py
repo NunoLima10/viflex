@@ -89,23 +89,27 @@ class DownloadManager:
     def show_video_info(self, url: str) -> None:
         video = YouTube(url)
         duration = str(datetime.timedelta(seconds=video.length))
-
-        info = f"Title: {video.title}\nChannel: {video.author}\nViews: {video.views}\nDuration: {duration} mim"
-        
-        ColorPrinter.show("Video info".center(20,"="),"warning")
+        label = "Video info".center(20,"=")
+        info = f"""{ColorPrinter.colored(label,type="warning")}
+{ColorPrinter.colored(text="Title:")} {video.title}
+{ColorPrinter.colored(text="Channel:")} {video.author}
+{ColorPrinter.colored(text="Views:")} {video.views}
+{ColorPrinter.colored(text="Duration:")} {duration}
+{ColorPrinter.colored("="*20,type="warning")}"""
         print(info)
-        ColorPrinter.show("="*30,"warning")
+
 
     def show_playlist_info(self, url: str) -> None:
         playlist = Playlist(url)
-        try:
-            info = f"Title: {playlist.title}\nChannel: {playlist.owner}\nViews: {playlist.views}\nVideos: {playlist.length}"
-        except KeyError:
-            info = "Playlist have no info"
-
-        ColorPrinter.show("Playlist info".center(20,"="),"warning")
+        label = "Playlist info".center(20,"=")
+        info = f"""{ColorPrinter.colored(label,type="warning")}
+{ColorPrinter.colored(text="Title:")} {playlist.title}
+{ColorPrinter.colored(text="Channel:")} {playlist.owner}
+{ColorPrinter.colored(text="Views:")} {playlist.views}
+{ColorPrinter.colored(text="Videos:")} {playlist.length}
+{ColorPrinter.colored("="*20,type="warning")}"""
         print(info)
-        ColorPrinter.show("="*30,"warning")
+
 
     @with_internet
     def download_thumbnail(*arg, **kwargs) -> bool:
