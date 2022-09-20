@@ -1,4 +1,3 @@
-from crypt import methods
 from src.youtube_link import YouTubeLink
 from src.color_printer import ColorPrinter
 from src.load_bar import LoadBar
@@ -48,6 +47,7 @@ class DownloadManager:
                 ColorPrinter.show(f"Provided invalid quality {quality}","error",on_error_exit=True)
 
     def start(self) -> None:
+        self.validate_args()
         if self.args["info"]:
             self.complete_info(self.args["url"])
             exit()

@@ -2,7 +2,7 @@ import requests
 from urllib.request import urlopen
 from urllib.error import URLError
 import re
-from color_printer import ColorPrinter
+from src.color_printer import ColorPrinter
 
 def regex_search(pattern: str, string: str) -> bool:
     regex = re.compile(pattern)

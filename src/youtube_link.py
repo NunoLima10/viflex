@@ -1,4 +1,4 @@
-from pytube import extract,request
+from pytube import extract,request,Playlist
 from src.util import regex_search
 
 class InvalidURL(Exception):
@@ -6,6 +6,9 @@ class InvalidURL(Exception):
         super().__init__(*args)
 
 class VideoUnavailable(Exception):
+    def __init__(self, *args: object) -> None:
+        super().__init__(*args)
+class PlaylistUnavailable(Exception):
     def __init__(self, *args: object) -> None:
         super().__init__(*args)
 
@@ -45,6 +48,9 @@ class YouTubeLink:
                     raise VideoUnavailable
             elif status == 'LIVE_STREAM':
                 raise VideoUnavailable
+    def check_playlist_availability(self) -> None:
+        if not Playlist(self.url).videos:
+            raise PlaylistUnavailable
 
     def test_url(self) -> None:
         self.is_video = regex_search(self.video_url_pattern,self.url)
@@ -55,6 +61,9 @@ class YouTubeLink:
         
         if self.is_video:
             self.check_video_availability()
+        
+        if self.is_video and self.is_playlist:
+            self.check_playlist_availability()
 
     def available_for_download(self) -> dict:
         available_flag = True
@@ -67,6 +76,9 @@ class YouTubeLink:
         except VideoUnavailable:
             available_flag = False
             error_message = "Video is unavailable for download, possible reasons(MembersOnly,Private)"
+        except PlaylistUnavailable:
+            available_flag = False
+            error_message = "Playlist is unavailable for download"
         
         return {"available": available_flag,"error_message": error_message}
 
