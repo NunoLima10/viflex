@@ -16,6 +16,8 @@ class PlaylistUnavailable(Exception):
 class YouTubeLink:
     def __init__(self, url: str) -> None:
         self.url = url
+        self._is_video = None
+        self._is_playlist = None
         self.video_url_pattern = r"(?:v=|\/)([0-9A-Za-z_-]{11}).*"
         self.playlist_url_pattern = r"(?:list=)([0-9A-Za-z_-]{11}).*"
 
@@ -52,10 +54,20 @@ class YouTubeLink:
         if not Playlist(self.url).videos:
             raise PlaylistUnavailable
 
-    def test_url(self) -> None:
-        self.is_video = regex_search(self.video_url_pattern,self.url)
-        self.is_playlist = regex_search(self.playlist_url_pattern,self.url)
+    @property
+    def is_video(self) -> bool:
+        if self._is_video:
+            return self._is_video
+        self._is_video = regex_search(self.video_url_pattern,self.url)
+        return self._is_video
+    @property
+    def is_playlist(self) -> bool:
+        if self._is_playlist:
+            return self._is_playlist
+        self._is_playlist = regex_search(self.playlist_url_pattern,self.url)
+        return self._is_playlist
 
+    def test_url(self) -> None:
         if not(self.is_video or self.is_playlist):
             raise InvalidURL
         
