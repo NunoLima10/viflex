@@ -20,7 +20,7 @@ class ColorPrinter:
     def colored(text: str, type: str = "success") -> str:
         message = text
         if type in ColorPrinter.styles:
-            message = f'{ColorPrinter.styles[type]}{text}'
+            message = f'{ColorPrinter.styles[type]}{text}{colorama.Fore.RESET}'
         return message
 
 
