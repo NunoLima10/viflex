@@ -1,15 +1,11 @@
 class InvalidURL(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
+    pass
 
 class VideoUnavailable(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
+    pass
 
 class PlaylistUnavailable(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
+    pass
 
 class NoResolutionDesired(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
+    pass

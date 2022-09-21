@@ -1,4 +1,3 @@
-# Nuno Lima
 import colorama
 class ColorPrinter:
     colorama.init(autoreset=True)

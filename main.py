@@ -14,6 +14,5 @@ def main() -> None:
     download_manager = Downloader(args)
     download_manager.start()
 
-
 if __name__=="__main__":
     main()

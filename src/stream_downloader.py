@@ -1,9 +1,10 @@
 from src.color_printer import ColorPrinter
-from src.youtube_link import YouTubeLink
 from src.exceptions import NoResolutionDesired
 from src.load_bar import LoadBar
-from pytube import YouTube,Playlist
+from src.youtube_link import YouTubeLink
 from src.util import with_internet,download_image
+
+from pytube import YouTube,Playlist
 
 import datetime
 import pathlib
@@ -46,7 +47,7 @@ class StreamDownloader:
             on_complete_callback=self.on_complete
             )
         self.show_short_info(video)
-        ColorPrinter.show("Finding audio stream",print_end="\r")
+        ColorPrinter.show(text="Finding audio stream", print_end="\r")
         stream = video.streams.filter(only_audio=True, file_extension='mp4').desc().first()
 
         load_bar.total_size = stream.filesize
@@ -66,7 +67,7 @@ class StreamDownloader:
             on_complete_callback=self.on_complete
             )
         self.show_short_info(video)
-        ColorPrinter.show("Finding videos stream",print_end="\r")
+        ColorPrinter.show(text="Finding videos stream", print_end="\r")
         stream = video.streams.get_highest_resolution()
         progressive = True
 
@@ -91,21 +92,21 @@ class StreamDownloader:
             status = youtube_link.available_for_download()
 
             if not status["available"]:
-                ColorPrinter.show(status["error_message"],"error")
-                ColorPrinter.show("Video skipped","warning")
+                ColorPrinter.show(text=status["error_message"], type="error")
+                ColorPrinter.show(text="Video skipped", type="warning")
                 continue
 
             if video_flag or (not video_flag and not audio_flag):
                 try:
                     self.download_video(video.watch_url,resolution)
                 except NoResolutionDesired:
-                    ColorPrinter.show("Video does not have the selected resolution","error")
-                    ColorPrinter.show("Video skipped","warning")
+                    ColorPrinter.show(text="Video does not have the selected resolution", type="error")
+                    ColorPrinter.show(text="Video skipped",type="warning")
             
             if audio_flag:
                 self.download_audio(video.watch_url)
 
-    def get_by_resolution(self,streams: YouTube.streams, resolution: str):
+    def get_by_resolution(self, streams: YouTube.streams, resolution: str):
         streams = streams.filter(only_video=True,adaptive=True,file_extension='mp4').desc()
         for stream in streams:
             if stream.resolution == resolution:
@@ -115,9 +116,9 @@ class StreamDownloader:
     def show_short_info(self, video: YouTube) -> None:
         duration = str(datetime.timedelta(seconds=video.length))
         label = "Video info".center(20,"=")
-        info = f"""{ColorPrinter.colored(label,type="warning")}
+        info = f"""{ColorPrinter.colored(text=label, type="warning")}
 {ColorPrinter.colored(text="Title:")} {video.title}
 {ColorPrinter.colored(text="Channel:")} {video.author}
 {ColorPrinter.colored(text="Duration:")} {duration}
-{ColorPrinter.colored("="*20,type="warning")}"""
+{ColorPrinter.colored(text="="*20,type="warning")}"""
         print(info)

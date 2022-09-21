@@ -1,10 +1,9 @@
+from hurry.filesize import alternative,size
 
-from hurry.filesize import alternative
-from hurry.filesize import size
 import colorama
 
 class LoadBar:
-    def __init__(self, total_size: float = 100 , length: int = 50, decimals: float = 1, 
+    def __init__(self, total_size: float = 100, length: int = 50, decimals: float = 1, 
                 fill: str = '█', no_fill:str = "-") -> None:
         self.total_size =  total_size
         self.length = length

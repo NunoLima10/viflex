@@ -1,8 +1,9 @@
 from src.exceptions import NoResolutionDesired
-from src.youtube_link import YouTubeLink
 from src.color_printer import ColorPrinter
 from src.stream_downloader import StreamDownloader
+from src.youtube_link import YouTubeLink
 from src.util import regex_search,with_internet
+
 from pytube import YouTube,Playlist
 
 import pathlib
@@ -12,7 +13,7 @@ class Downloader:
     def __init__(self, args: dict) -> None:
         self.args = args
         self.output_folder = pathlib.Path.cwd()
-        ColorPrinter.show("Working on it...","warning",print_end="\r")
+        ColorPrinter.show(text="Working on it...", type="warning", print_end="\r")
         
     def validate_args(self) -> YouTubeLink:
         
@@ -20,10 +21,10 @@ class Downloader:
         status = youtube_link.available_for_download()
 
         if not status["available"]:
-            ColorPrinter.show(status["error_message"],"error",on_error_exit=True)
+            ColorPrinter.show(text=status["error_message"], type="error", on_error_exit=True)
         
         if self.args["playlist"] and not youtube_link.is_playlist:
-            ColorPrinter.show("Provided playlist flag but is a video url","error",on_error_exit=True)
+            ColorPrinter.show(text="Provided playlist flag but is a video url", type="error", on_error_exit=True)
         
         self.validate_resolution(self.args["resolution"])
         self.validate_path(self.args["path"])
@@ -33,14 +34,14 @@ class Downloader:
         if path is not None:
             valid_path = pathlib.Path.exists(path)
             if not valid_path:
-                ColorPrinter.show(f"Provided invalid path {path}","error",on_error_exit=True)
+                ColorPrinter.show(text=f"Provided invalid path {path}", type="error", on_error_exit=True)
             self.output_folder = path
 
     def validate_resolution(self, resolution: str) -> None:
         if resolution is not None:
             valid_resolution = regex_search(r"^[\d]{3,4}[p]$", resolution)
             if not valid_resolution:
-                ColorPrinter.show(f"Provided invalid resolution {resolution}","error",on_error_exit=True)
+                ColorPrinter.show(text=f"Provided invalid resolution {resolution}",type="error",on_error_exit=True)
     
     def start(self) -> None:
         self.validate_args()
@@ -84,25 +85,24 @@ class Downloader:
         video = YouTube(url)
         duration = str(datetime.timedelta(seconds=video.length))
         label = "Video info".center(20,"=")
-        info = f"""{ColorPrinter.colored(label,type="warning")}
+        info = f"""{ColorPrinter.colored(text=label,type="warning")}
 {ColorPrinter.colored(text="Title:")} {video.title}
 {ColorPrinter.colored(text="Channel:")} {video.author}
 {ColorPrinter.colored(text="Views:")} {video.views}
 {ColorPrinter.colored(text="Duration:")} {duration}
-{ColorPrinter.colored("="*20,type="warning")}
-"""
+{ColorPrinter.colored(text="="*20,type="warning")}"""
         print(info)
 
 
     def show_playlist_info(self, url: str) -> None:
         playlist = Playlist(url)
         label = "Playlist info".center(20,"=")
-        info = f"""{ColorPrinter.colored(label,type="warning")}
+        info = f"""{ColorPrinter.colored(text=label,type="warning")}
 {ColorPrinter.colored(text="Title:")} {playlist.title}
 {ColorPrinter.colored(text="Channel:")} {playlist.owner}
 {ColorPrinter.colored(text="Views:")} {playlist.views}
 {ColorPrinter.colored(text="Videos:")} {playlist.length}
-{ColorPrinter.colored("="*20,type="warning")}"""
+{ColorPrinter.colored(text="="*20,type="warning")}"""
         print(info)
 
     @with_internet
