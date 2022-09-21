@@ -1,18 +1,6 @@
 from pytube import extract,request,Playlist
 from src.util import regex_search
-
-class InvalidURL(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
-
-class VideoUnavailable(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
-class PlaylistUnavailable(Exception):
-    def __init__(self, *args: object) -> None:
-        super().__init__(*args)
-
-
+from src.exceptions import VideoUnavailable,PlaylistUnavailable,InvalidURL
 class YouTubeLink:
     def __init__(self, url: str) -> None:
         self.url = url
