@@ -49,6 +49,7 @@ class StreamDownloader:
         self.show_short_info(video)
         ColorPrinter.show(text="Finding audio stream", print_end="\r")
         stream = video.streams.filter(only_audio=True, file_extension='mp4').desc().first()
+        ColorPrinter.show(text="CTRL + C to cancel   ", type="warning")
 
         load_bar.total_size = stream.filesize
         load_bar.update(stream.filesize)
@@ -57,7 +58,11 @@ class StreamDownloader:
             filename_prefix=self.audio_prefix
         )
         path = pathlib.Path(file)
-        path.rename(path.with_suffix('.mp3'))
+        try:
+            path.rename(path.with_suffix('.mp3'))
+        except FileExistsError:
+            ColorPrinter.show(text="File already exists", type="warning")
+            path.unlink()
 
     @with_internet
     def download_video(self, url: str, resolution: str = None): 
@@ -69,6 +74,7 @@ class StreamDownloader:
         self.show_short_info(video)
         ColorPrinter.show(text="Finding videos stream", print_end="\r")
         stream = video.streams.get_highest_resolution()
+        ColorPrinter.show(text="CTRL + C to cancel", type="warning")
         progressive = True
 
         if resolution is not None:
