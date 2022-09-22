@@ -32,7 +32,7 @@ class Downloader:
 
     def validate_path(self, path: str) -> None:
         if path is not None:
-            valid_path = pathlib.Path.exists(path)
+            valid_path = pathlib.Path.is_dir(path)
             if not valid_path:
                 ColorPrinter.show(text=f"Provided invalid path {path}", type="error", on_error_exit=True)
             self.output_folder = path
