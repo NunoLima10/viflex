@@ -13,7 +13,7 @@ class ArgParser:
         self.parser.add_argument("-a", "--audio",help="download only the audio",action="store_true")
         self.parser.add_argument("-t", "--thumbnail",help="download only the thumbnail",action="store_true")
         self.parser.add_argument("-pl", "--playlist",help="download all videos from playlist",action="store_true")
-        self.parser.add_argument("-i", "--info",help="show detailed information",action="store_true")
+        self.parser.add_argument("-i", "--info",help="show detailed information about video or playlist",action="store_true")
         self.parser.add_argument("-r", "--resolution",help="select video resolution")
         self.parser.add_argument("--version", action='version', version='%(prog)s 0.1.1')
         self.parser.add_argument('-p','--path', type=pathlib.Path,help="select output folder")
