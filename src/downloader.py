@@ -83,6 +83,8 @@ class Downloader:
 
     def show_video_info(self, url: str) -> None:
         video = YouTube(url)
+        resolutions = self.get_available_resolutions(url)
+
         duration = str(datetime.timedelta(seconds=video.length))
         label = "Video info".center(20,"=")
         info = f"""{ColorPrinter.colored(text=label,type="warning")}
@@ -90,7 +92,12 @@ class Downloader:
 {ColorPrinter.colored(text="Channel:")} {video.author}
 {ColorPrinter.colored(text="Views:")} {video.views}
 {ColorPrinter.colored(text="Duration:")} {duration}
-{ColorPrinter.colored(text="="*20,type="warning")}"""
+{ColorPrinter.colored(text="Progressive")} {" ".join(resolutions["progressive"])}
+{ColorPrinter.colored(text="Adaptive")} {" ".join(resolutions["adaptive"])}
+{ColorPrinter.colored(text="Audio")} {" ".join(resolutions["audio"])}
+{ColorPrinter.colored(text="="*20,type="warning")}
+
+"""
         print(info)
 
 

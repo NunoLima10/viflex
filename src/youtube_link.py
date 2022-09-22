@@ -60,7 +60,7 @@ class YouTubeLink:
             error_message = "Video is unavailable for download, possible reasons(MembersOnly,Private)"
         except PlaylistUnavailable:
             available_flag = False
-            error_message = "Playlist is unavailable for download"
+            error_message = "Playlist is unavailable"
         
         return {"available": available_flag,"error_message": error_message}
 
