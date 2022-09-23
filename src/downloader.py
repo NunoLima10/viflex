@@ -15,7 +15,7 @@ class Downloader:
         self.output_folder = pathlib.Path.cwd()
         ColorPrinter.show(text="Working on it...", type="warning", print_end="\r")
         
-    def validate_args(self) -> YouTubeLink:
+    def validate_args(self) -> None:
         
         youtube_link = YouTubeLink(self.args["url"])
         status = youtube_link.available_for_download()
@@ -44,6 +44,7 @@ class Downloader:
                 ColorPrinter.show(text=f"Provided invalid resolution {resolution}",type="error",on_error_exit=True)
     
     def start(self) -> None:
+
         self.validate_args()
         stream_downloader = StreamDownloader(self.output_folder)
 
@@ -58,7 +59,7 @@ class Downloader:
             try:
                 stream_downloader.download_video(self.args["url"], self.args["resolution"])
             except NoResolutionDesired:
-                pass
+                ColorPrinter.show(text="Video does not have the selected resolution", type="error", on_error_exit=True)
 
         if self.args["audio"] and not self.args["playlist"]:
             stream_downloader.download_audio(self.args["url"])
@@ -95,12 +96,9 @@ class Downloader:
 {ColorPrinter.colored(text="Progressive")} {" ".join(resolutions["progressive"])}
 {ColorPrinter.colored(text="Adaptive")} {" ".join(resolutions["adaptive"])}
 {ColorPrinter.colored(text="Audio")} {" ".join(resolutions["audio"])}
-{ColorPrinter.colored(text="="*20,type="warning")}
-
-"""
+{ColorPrinter.colored(text="="*20,type="warning")}"""
         print(info)
-
-
+        
     def show_playlist_info(self, url: str) -> None:
         playlist = Playlist(url)
         label = "Playlist info".center(20,"=")
@@ -115,9 +113,11 @@ class Downloader:
     @with_internet
     def get_available_resolutions(self, url: str) -> dict:
         video = YouTube(url)
+
         progressive_streams = video.streams.filter(progressive=True, file_extension='mp4').desc()
         adaptive_streams = video.streams.filter(only_video=True,adaptive=True, file_extension='mp4').desc()
         audio_streams = video.streams.filter(only_audio=True, file_extension='mp4').desc()
+
         progressive_resolution = [stream.resolution for stream in progressive_streams]
         adaptive_resolution = [stream.resolution for stream in adaptive_streams]
         audio_resolution = [stream.abr for stream in audio_streams]
