@@ -95,7 +95,8 @@ class StreamDownloader:
         )
         if not progressive:
             self.download_audio(url)
-    
+            
+    @with_internet
     def download_play_list(self, url: str, video_flag: bool, audio_flag: bool, 
                             resolution: str) -> None:
 
