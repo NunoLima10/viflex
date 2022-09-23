@@ -45,10 +45,13 @@ class StreamDownloader:
             url,
             on_progress_callback=self.on_progress,
             on_complete_callback=self.on_complete
-            )
+        )
+
         self.show_short_info(video)
+
         ColorPrinter.show(text="Finding audio stream", print_end="\r")
         stream = video.streams.filter(only_audio=True, file_extension='mp4').desc().first()
+        
         ColorPrinter.show(text="CTRL + C to cancel   ", type="warning")
 
         load_bar.total_size = stream.filesize
@@ -70,16 +73,19 @@ class StreamDownloader:
             url,
             on_progress_callback=self.on_progress,
             on_complete_callback=self.on_complete
-            )
+        )
+
         self.show_short_info(video)
+
         ColorPrinter.show(text="Finding videos stream", print_end="\r")
         stream = video.streams.get_highest_resolution()
+
         ColorPrinter.show(text="CTRL + C to cancel", type="warning")
         progressive = True
 
         if resolution is not None:
             progressive = False
-            stream = self.get_by_resolution(video.streams,resolution)
+            stream = self.get_by_resolution(video.streams, resolution)
 
         load_bar.total_size = stream.filesize
         load_bar.update(stream.filesize)
@@ -90,7 +96,9 @@ class StreamDownloader:
         if not progressive:
             self.download_audio(url)
     
-    def download_play_list(self,url: str,video_flag:bool, audio_flag:bool,resolution) -> None:
+    def download_play_list(self, url: str, video_flag: bool, audio_flag: bool, 
+                            resolution: str) -> None:
+
         playlist = Playlist(url)
 
         for video in playlist.videos:
@@ -104,10 +112,10 @@ class StreamDownloader:
 
             if video_flag or (not video_flag and not audio_flag):
                 try:
-                    self.download_video(video.watch_url,resolution)
+                    self.download_video(video.watch_url, resolution)
                 except NoResolutionDesired:
                     ColorPrinter.show(text="Video does not have the selected resolution", type="error")
-                    ColorPrinter.show(text="Video skipped",type="warning")
+                    ColorPrinter.show(text="Video skipped", type="warning")
             
             if audio_flag:
                 self.download_audio(video.watch_url)

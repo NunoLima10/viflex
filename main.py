@@ -3,7 +3,7 @@ from src.downloader import Downloader
 
 __author__ = "Nuno Lima"
 __copyright__ = "Copyright 2022 Nuno Lima"
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __maintainer__ = "Nuno Lima"
 __email__ = "contato.playcraft@gmail.com"
 __status__ = "Production"
