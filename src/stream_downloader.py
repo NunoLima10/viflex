@@ -80,7 +80,7 @@ class StreamDownloader:
         ColorPrinter.show(text="Finding videos stream", print_end="\r")
         stream = video.streams.get_highest_resolution()
 
-        ColorPrinter.show(text="CTRL + C to cancel", type="warning")
+        ColorPrinter.show(text="CTRL + C to cancel   ", type="warning")
         progressive = True
 
         if resolution is not None:
