@@ -97,7 +97,7 @@ class StreamDownloader:
             self.download_audio(url)
             
     @with_internet
-    def download_play_list(self, url: str, video_flag: bool, audio_flag: bool, 
+    def download_play_list(self, url: str, video_flag: bool, audio_flag: bool, thumbnail_flag: bool, 
                             resolution: str) -> None:
 
         playlist = Playlist(url)
@@ -111,7 +111,7 @@ class StreamDownloader:
                 ColorPrinter.show(text="Video skipped", type="warning")
                 continue
 
-            if video_flag or (not video_flag and not audio_flag):
+            if video_flag or (not video_flag and not audio_flag and not thumbnail_flag):
                 try:
                     self.download_video(video.watch_url, resolution)
                 except NoResolutionDesired:
@@ -120,6 +120,9 @@ class StreamDownloader:
             
             if audio_flag:
                 self.download_audio(video.watch_url)
+            
+            if thumbnail_flag:
+                self.download_thumbnail(video.watch_url)
 
     def get_by_resolution(self, streams: YouTube.streams, resolution: str):
         streams = streams.filter(only_video=True,adaptive=True,file_extension='mp4').desc()

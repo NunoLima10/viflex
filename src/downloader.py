@@ -69,6 +69,7 @@ class Downloader:
                 url=self.args["url"],
                 video_flag=self.args["video"],
                 audio_flag=self.args["audio"],
+                thumbnail_flag= self.args["thumbnail"],
                 resolution=self.args["resolution"]
             )
 
