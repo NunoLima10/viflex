@@ -86,6 +86,7 @@ class Downloader:
     def show_video_info(self, url: str) -> None:
         video = YouTube(url)
         resolutions = self.get_available_resolutions(url)
+        
 
         duration = str(datetime.timedelta(seconds=video.length))
         label = "Video info".center(20,"=")
@@ -119,10 +120,10 @@ class Downloader:
         adaptive_streams = video.streams.filter(only_video=True,adaptive=True, file_extension='mp4').desc()
         audio_streams = video.streams.filter(only_audio=True, file_extension='mp4').desc()
 
-        progressive_resolution = [stream.resolution for stream in progressive_streams]
-        adaptive_resolution = [stream.resolution for stream in adaptive_streams]
-        audio_resolution = [stream.abr for stream in audio_streams]
-
+        progressive_resolution = [stream.resolution for stream in progressive_streams if stream.resolution is not None]
+        adaptive_resolution = [stream.resolution for stream in adaptive_streams if stream.resolution is  not None]
+        audio_resolution = [stream.abr for stream in audio_streams if stream.abr is not None]
+        
         return{
             "progressive":list(dict.fromkeys(progressive_resolution)),
             "adaptive":list(dict.fromkeys(adaptive_resolution)),
