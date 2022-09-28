@@ -31,9 +31,11 @@ class StreamDownloader:
         if youtube_link.is_playlist and not youtube_link.is_video:
             return 
         
-        ColorPrinter.show(text="Downloading thumbnail")
-
         video = YouTube(url)
+        self.show_short_info(video)
+
+        ColorPrinter.show(text="Downloading thumbnail")
+        
         download_image(
             url =video.thumbnail_url,
             name=video.title,
