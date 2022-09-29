@@ -35,7 +35,7 @@
 >```
 >viflex optional flags "video url"  
 > ```
-> #### All optional commands
+> #### All optional flags
 > | short format |  long format | example arguments |                        help                       |
 > |:------------:|:------------:|:-----------------:|:-------------------------------------------------:|
 > |      -v      |    --video   |         --        | download only the video                           |
