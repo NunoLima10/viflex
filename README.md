@@ -64,6 +64,10 @@
 >```
 >viflex -t "video url"  
 > ```
+> You can make combinations to get the desired result, for example download the audio and thumbnail of all the videos in the play list
+>```
+>viflex -t -a -pl "playlist url" 
+> ```
 > How to download a video with a specific quality
 >```
 >viflex -v -r 2160p "video url"  
