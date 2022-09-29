@@ -13,7 +13,6 @@
  
  ---
  
- [environment variable](https://knowledge.autodesk.com/pt-br/support/navisworks-products/troubleshooting/caas/sfdcarticles/sfdcarticles/PTB/Adding-folder-path-to-Windows-PATH-environment-variable.html)
  ### How to use 
  > Recommended to put the exe file address in environment variable PATH, follow this tutorial
  > - [On Windows](https://knowledge.autodesk.com/pt-br/support/navisworks-products/troubleshooting/caas/sfdcarticles/sfdcarticles/PTB/Adding-folder-path-to-Windows-PATH-environment-variable.html) 
