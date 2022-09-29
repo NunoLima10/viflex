@@ -56,7 +56,7 @@
 >```
 >viflex -a "video url"  
 > ```
-> How to download all videos from playlist, to download only the audio of the videos just change ``-v`` to ``-a``
+> How to download all videos from playlist
 >```
 >viflex -v -pl "playlist url"  
 > ```
