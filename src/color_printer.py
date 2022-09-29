@@ -1,4 +1,5 @@
 import colorama
+import sys
 class ColorPrinter:
     colorama.init(autoreset=True)
     styles = {
@@ -13,7 +14,7 @@ class ColorPrinter:
             message = f'{ColorPrinter.styles[type]}{text}'
         print(message,end=print_end)
         if type == "error" and on_error_exit:
-            exit()
+            sys.exit()
 
     @staticmethod
     def colored(text: str, type: str = "success") -> str:

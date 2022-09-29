@@ -8,6 +8,7 @@ from pytube import YouTube,Playlist
 
 import pathlib
 import datetime
+import sys
 
 class Downloader:
     def __init__(self, args: dict) -> None:
@@ -50,7 +51,7 @@ class Downloader:
 
         if self.args["info"]:
             self.complete_info(self.args["url"])
-            exit()
+            sys.exit()
 
         if self.args["thumbnail"]:
             stream_downloader.download_thumbnail(self.args["url"])
