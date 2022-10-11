@@ -3,7 +3,8 @@
 ## Download videos and music from You Tube through your terminal
 
 ### Description
-
+> Devflog on [Youtube](https://www.youtube.com/watch?v=jabUVwC8yQU)
+>
 > Viflex is a cli app for youtube videos with several features, it can download playlist, audios and video covers. The focus is as objective as possible without having to take many steps to start your download directly in the desired folder, designed for video editors who need research and visuals or sound on youtube.
 ### Installation
 
@@ -82,3 +83,4 @@
 ### Project diagram
 >
 > <img src="images/viflex-diagram.png">
+>
