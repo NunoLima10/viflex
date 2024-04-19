@@ -2,7 +2,7 @@ from src.exceptions import NoResolutionDesired
 from src.color_printer import ColorPrinter
 from src.stream_downloader import StreamDownloader
 from src.youtube_link import YouTubeLink
-from src.util import regex_search,with_internet
+from src.util import regex_search
 
 from pytube import YouTube,Playlist
 
@@ -113,7 +113,7 @@ class Downloader:
 {ColorPrinter.colored(text="="*20,type="warning")}"""
         print(info)
 
-    @with_internet
+    # @with_internet
     def get_available_resolutions(self, url: str) -> dict:
         video = YouTube(url)
 

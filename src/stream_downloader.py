@@ -2,7 +2,7 @@ from src.color_printer import ColorPrinter
 from src.exceptions import NoResolutionDesired
 from src.load_bar import LoadBar
 from src.youtube_link import YouTubeLink
-from src.util import with_internet,download_image
+from src.util import download_image
 
 from pytube import YouTube,Playlist
 
@@ -24,7 +24,7 @@ class StreamDownloader:
         load_bar.finish() 
         ColorPrinter.show(text="Downloaded successfully")    
     
-    @with_internet
+    # @with_internet
     def download_thumbnail(self, url: str) -> None:
         youtube_link = YouTubeLink(url)
 
@@ -69,7 +69,7 @@ class StreamDownloader:
             ColorPrinter.show(text="File already exists", type="warning")
             path.unlink()
 
-    @with_internet
+    # @with_internet
     def download_video(self, url: str, resolution: str = None): 
         video = YouTube(
             url,
@@ -98,7 +98,7 @@ class StreamDownloader:
         if not progressive:
             self.download_audio(url)
             
-    @with_internet
+    # @with_internet
     def download_play_list(self, url: str, video_flag: bool, audio_flag: bool, thumbnail_flag: bool, 
                             resolution: str) -> None:
 
@@ -134,6 +134,8 @@ class StreamDownloader:
         raise NoResolutionDesired
     
     def show_short_info(self, video: YouTube) -> None:
+        if video.length is None:
+            return
         duration = str(datetime.timedelta(seconds=video.length))
         label = "Video info".center(20,"=")
         info = f"""{ColorPrinter.colored(text=label, type="warning")}
