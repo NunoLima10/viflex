@@ -22,8 +22,8 @@ def with_internet(func):
     def wrapper(*arg, **kwargs):
         if not is_internet():
             ColorPrinter.show(text="Lost internet connection", type="error", on_error_exit=True)
-        return func(*arg, **kwargs)
-    return wrapper
+        return 
+    return func
 
 def download_image(url: str, name: str, output_folder: str) -> None:
     img_data = requests.get(url).content
